@@ -1,8 +1,8 @@
-apt-get update && sudo apt-get upgrade
+#sudo bash -c "$(wget -qLO - wget --header 'Authorization: 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' https://raw.githubusercontent.com/NathanWarrick/Boilerplates/main/docker/docker-portainer.sh?token=GHSAT0AAAAAACDPDIDZFIEWXK3D364ZMTBSZLW7GNQ)"
+apt-get update -y && sudo apt-get upgrade -y
 apt-get install docker.io
 systemctl start docker
 systemctl enable docker
-systemctl status docker
 docker run -d \
   -p 9001:9001 \
   --name portainer_agent \
