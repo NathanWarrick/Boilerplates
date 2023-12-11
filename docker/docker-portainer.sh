@@ -1,4 +1,5 @@
-#sudo bash -c "$(wget -qLO - wget --header 'Authorization: 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' https://raw.githubusercontent.com/NathanWarrick/Boilerplates/main/docker/docker-portainer.sh?token=GHSAT0AAAAAACDPDIDZFIEWXK3D364ZMTBSZLW7GNQ)"
+#sudo bash -c "$(wget -qLO - wget --header 'Authorization: token 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' https://raw.githubusercontent.com/NathanWarrick/Boilerplates/main/docker/docker-portainer.sh)"
+
 apt-get update -y && sudo apt-get upgrade -y
 apt-get install docker.io
 systemctl start docker
