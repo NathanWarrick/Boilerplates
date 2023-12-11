@@ -13,6 +13,22 @@ services:
       - nginx-data:/data
       - nginx-letsencrypt:/etc/letsencrypt
 
+  watchtower:
+    image: containrrr/watchtower
+    container_name: Watchtower
+    restart: unless-stopped
+    networks:
+      - humanity
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_CLEANUP: true
+      WATCHTOWER_INCLUDE_STOPPED: true
+      WATCHTOWER_INCLUDE_RESTARTING: true
+      WATCHTOWER_RUN_ONCE: false
+      WATCHTOWER_SCHEDULE: 0 0 * * *
+      TZ: Australia/Melbourne
+
 volumes:
   nginx-data:
   nginx-letsencrypt:
