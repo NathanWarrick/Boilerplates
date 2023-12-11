@@ -17,7 +17,7 @@ services:
 
   watchtower:
     image: containrrr/watchtower
-    container_name: Watchtower
+    container_name: watchtower
     restart: unless-stopped
     networks:
       - humanity
