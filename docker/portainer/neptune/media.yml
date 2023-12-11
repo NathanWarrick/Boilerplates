@@ -1,0 +1,376 @@
+---
+version: "3.8"
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    networks:
+      - media
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Melbourne
+    volumes:
+      - /mnt/user/Downloads/torrent/:/torrent
+      - /mnt/user/Downloads/scripts/:/scripts
+      - /mnt/user/Media/Anime Movies/:/AnimeMovies
+      - /mnt/user/appdata/radarr:/config
+      - /mnt/user/Media/Movies/:/movies
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    networks:
+      - media
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Melbourne
+    volumes:
+      - /mnt/user/appdata/sonarr:/config
+      - /mnt/user/Downloads/torrent/:/torrent
+      - /mnt/user/Media/TV Shows/:/tv
+      - /mnt/user/Downloads/scripts/:/scripts
+      - /mnt/user/Media/Anime/:/Anime
+      - /mnt/user/Media/Cartoons/:/Cartoons
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    networks:
+      - media
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Melbourne
+    volumes:
+      - /mnt/user/appdata/lidarr:/config
+      - /mnt/user/Media/Music/:/music #optional
+      - /mnt/user/Downloads/torrent/:/torrent #optional
+    ports:
+      - 8686:8686
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  whisparr:
+    container_name: whisparr
+    image: ghcr.io/hotio/whisparr:latest
+    networks:
+      - media
+    ports:
+      - "6969:6969"
+    environment:
+      - PUID=99
+      - PGID=100
+      - UMASK=002
+      - TZ=Australia/Melbourne
+    volumes:
+      - /mnt/user/appdata/whisparr:/config
+      - /mnt/user/Downloads/torrent/:/torrent
+      - /mnt/user/XXX:/XXX
+      - /mnt/user/Downloads/scripts/:/scripts
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    networks:
+      - media
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Melbourne
+    volumes:
+      - /mnt/user/appdata/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  tautulli:
+    image: ghcr.io/tautulli/tautulli:latest
+    container_name: tautulli
+    networks:
+      - media
+    volumes:
+      - /mnt/user/appdata/tautulli:/config
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Melbourne
+    ports:
+      - 8181:8181
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    networks:
+      - media
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Melbourne
+    volumes:
+      - /mnt/user/appdata/bazarr:/config
+      - /mnt/user/Media/Movies/:/movies
+      - /mnt/user/Media/TV Shows/:/tv
+      - /mnt/user/Media/Anime/:/Anime
+      - /mnt/user/Media/Cartoons/:/Cartoons
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    networks:
+      - media
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Melbourne
+    volumes:
+      - /mnt/user/appdata/overseerr:/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: "service:gluetun"
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Melbourne
+      - WEBUI_PORT=8080
+    volumes:
+      - /mnt/user/appdata/qbittorrent-new:/config
+      - /mnt/user/Downloads/torrent/:/torrent
+    # ports are mapped in gluetun
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    restart: always
+    networks:
+      - media
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 6881:6881 # qBitTorrent
+      - 6881:6881/udp # qBitTorrent
+      - 8000:8000 # control server
+      - 8080:8080 # qBitTorrent
+      - 8085:8085
+      - 8118:8118 # qBitTorrent
+      - 8888:8888 # HTTP Proxy
+    volumes:
+      - /mnt/user/appdata/gluetun:/gluetun
+    environment:
+      - VPN_SERVICE_PROVIDER=airvpn
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=oA24T9UFzeux4YKwA2oB3AdJPnIeBM5GRygzdO3A+08=
+      - WIREGUARD_PRESHARED_KEY=s1BICHFd591iXS6/MUpZsmTuujLzv21hljqTWMizDpA=
+      - WIREGUARD_ADDRESSES=10.137.131.72/32 # removed fd7d:76ee:e68f:a993:d699:6f39:dc19:b297/128
+      - SERVER_REGIONS=Oceania
+      - FIREWALL_VPN_INPUT_PORTS=7111
+      - FIREWALL=on
+      - TZ=Australia/Melbourne
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+  tdarr:
+    container_name: tdarr_main
+    image: ghcr.io/haveagitgat/tdarr:2.14.01
+    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    network_mode: bridge
+    ports:
+      - 8265:8265 # webUI port
+      - 8266:8266 # server port
+      - 8264:8264 # node port
+    environment:
+      - TZ=Australia/Melbourne
+      - serverIP=192.168.1.250
+      - serverPort=8266
+      - webUIPort=8265
+      - internalNode=true
+      - nodeName=Neptune
+      - PUID=99
+      - PGID=100
+    volumes:
+      - /mnt/user/appdata/tdarr/server:/app/server
+      - /mnt/user/appdata/tdarr/configs:/app/configs
+      - /mnt/user/appdata/tdarr/logs:/app/logs
+      - /mnt/user/Media:/Media
+      - /mnt/user/transcode/tdarr:/temp
+    deploy:
+      resources:
+        limits:
+          memory: 5g
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  tdarr_private:
+    container_name: tdarr_private
+    image: ghcr.io/haveagitgat/tdarr:2.00.24
+    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    networks:
+      br0:
+        ipv4_address: 192.168.1.230
+    ports:
+      - 8265:8265 # webUI port
+      - 8266:8266 # server port
+      - 8264:8264 # node port
+    environment:
+      - TZ=Australia/Melbourne
+      - serverIP=192.168.1.230
+      - serverPort=8266
+      - webUIPort=8265
+      - internalNode=true
+      - inContainer=true
+      - nodeName=Neptune
+      - PUID=99
+      - PGID=100
+    volumes:
+      - /mnt/user/appdata/tdarr-priv/server:/app/server
+      - /mnt/user/appdata/tdarr-priv/configs:/app/configs
+      - /mnt/user/appdata/tdarr-priv/logs:/app/logs
+      - /mnt/user/XXX/:/mnt/media
+      - /mnt/user/transcode/tdarr-priv:/temp
+    deploy:
+      resources:
+        limits:
+          memory: 5g
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  syncthing:
+    image: lscr.io/linuxserver/syncthing
+    container_name: syncthing
+    networks:
+      - media
+    environment:
+      - PUID=99
+      - PGID=100
+    volumes:
+      - /mnt/user/Backup:/Backup
+      - /mnt/user/appdata/syncthing:/config
+    ports:
+      - 8384:8384
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+  photoprism:
+    image: photoprism/photoprism
+    container_name: photoprism
+    networks:
+      - media
+    environment:
+      - PUID=99
+      - PGID=100
+      - PHOTOPRISM_UPLOAD_NSFW=true
+      - PHOTOPRISM_DETECT_NSFW=false
+      - PHOTOPRISM_SITE_TITLE=PhotoPrism
+      - PHOTOPRISM_SITE_CAPTION=Browse Your Life
+      - PHOTOPRISM_SITE_DESCRIPTION=Nathans Photos
+      - PHOTOPRISM_SITE_AUTHOR=Nathan
+      - PHOTOPRISM_ADMIN_PASSWORD=B@yed133
+      - PHOTOPRISM_DATABASE_DRIVER=sqlite
+      - PHOTOPRISM_DATABASE_DSN=
+      - PHOTOPRISM_AUTO_INDEX=180
+      - PHOTOPRISM_AUTO_IMPORT=180
+      - PHOTOPRISM_SPONSOR=true
+      - PHOTOPRISM_SETTINGS_HIDDEN=false
+      - PHOTOPRISM_THUMB_UNCACHED=false
+      - Tumbnail Size Limit=2048
+      - PHOTOPRISM_THUMB_SIZE_UNCACHED=7680
+      - PHOTOPRISM_JPEG_SIZE=7680
+      - PHOTOPRISM_JPEG_QUALITY=90
+      - PHOTOPRISM_DARKTABLE_PRESETS=false
+      - PHOTOPRISM_THUMB_FILTER=lanczos
+      - PHOTOPRISM_EXPERIMENTAL=false
+      - PHOTOPRISM_STORAGE_PATH=/photoprism/storage
+    volumes:
+      - /mnt/user/appdata/photoprism/:/photoprism/storage
+      - /mnt/user/Photoprism:/photoprism/originals
+    ports:
+      - 2342:2342
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+
+networks:
+  media:
+    driver: bridge
+    name: media
+  br0:
+    driver: ipvlan
+    external: true

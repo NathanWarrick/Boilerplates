@@ -1,0 +1,95 @@
+# This configuration does not include a processing node
+# Which makes for faster setup times
+version: "3.8"
+services:
+  db:
+    image: opendronemap/webodm_db
+    container_name: db
+    expose:
+      - "5432"
+    volumes:
+      - /mnt/user/webODM/db:/var/lib/postgresql/data:Z
+    restart: no
+    oom_score_adj: -100
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+
+  webapp:
+    image: opendronemap/webodm_webapp
+    container_name: webapp
+    entrypoint: /bin/bash -c "chmod +x /webodm/*.sh && /bin/bash -c \"/webodm/wait-for-postgres.sh db /webodm/wait-for-it.sh -t 0 broker:6379 -- /webodm/start.sh\""
+    volumes:
+      - /mnt/user/webODM/data:/webodm/app/media:z
+    ports:
+      - 8645:8000
+    depends_on:
+      - db
+      - broker
+      - worker
+      - node-odm
+    environment:
+      - WO_PORT
+      - WO_HOST
+      - WO_DEBUG
+      - WO_BROKER
+      - WO_DEV
+      - WO_DEV_WATCH_PLUGINS
+      - WO_DEFAULT_NODES
+    restart: no
+    oom_score_adj: 0
+    deploy:
+      resources:
+        limits:
+          memory: 10G
+
+  broker:
+    image: redis
+    container_name: broker
+    restart: no
+    oom_score_adj: -500
+    volumes:
+      - /mnt/user/webODM/broker:/data:z
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+
+  worker:
+    image: opendronemap/webodm_webapp
+    container_name: worker
+    entrypoint: /bin/bash -c "/webodm/wait-for-postgres.sh db /webodm/wait-for-it.sh -t 0 broker:6379 -- /webodm/wait-for-it.sh -t 0 webapp:8000 -- /webodm/worker.sh start"
+    volumes:
+      - /mnt/user/webODM/data:/webodm/app/media:z
+    depends_on:
+      - db
+      - broker
+    environment:
+      - WO_BROKER
+      - WO_DEBUG
+    restart: no
+    oom_score_adj: 250
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+  node-odm:
+    image: opendronemap/nodeodm:gpu
+    volumes:
+      - /mnt/user/webODM/node1:/var/www/data:z
+      - /mnt/user/webODM/node1_temp:/var/www/tmp:z
+    expose:
+      - "3000"
+    restart: no
+    oom_score_adj: 500
+    deploy:
+      resources:
+        limits:
+          memory: 96g
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

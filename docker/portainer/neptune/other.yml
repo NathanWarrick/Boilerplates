@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  archisteamfarm:
+    image: justarchi/archisteamfarm
+    container_name: archisteamfarm
+    restart: unless-stopped
+    networks:
+      - humanity
+    volumes:
+      - /mnt/user/appdata/ASF/config:/app/config
+      - /mnt/user/appdata/ASF/plugins:/app/plugins
+      - /mnt/user/appdata/ASF/logs:/app/logs
+    ports:
+      - 1242:1242/tcp
+
+networks:
+  humanity:
+    external: true

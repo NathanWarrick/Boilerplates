@@ -1,0 +1,47 @@
+version: "3.8"
+
+networks:
+  humanity:
+    external: true
+
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    volumes:
+      - /mnt/user/databases/mysql/:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: B@yed133
+      MYSQL_USER: NathanWarrick
+      MYSQL_PASSWORD: B@yed133
+
+  sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql
+    restart: unless-stopped
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: B@yed133
+
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    container_name: postgres
+    environment:
+      POSTGRES_USER: NathanWarrick
+      POSTGRES_PASSWORD: B@yed133
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    container_name: adminer
+    ports:
+      - 8061:8080

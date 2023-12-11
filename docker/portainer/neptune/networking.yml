@@ -1,0 +1,161 @@
+version: "3.8"
+
+networks:
+  br0:
+    driver: ipvlan
+    external: true
+  humanity:
+    external: true
+
+services:
+  tailscale:
+    image: deasmi/unraid-tailscale:latest
+    container_name: tailscale
+    hostname: unraid
+    environment:
+      - UP_FLAGS=--advertise-exit-node --advertise-routes=192.168.0.0/20
+    volumes:
+      - /mnt/user/appdata/tailscale:/state
+      - /dev/net/tun:/dev/net/tun
+    restart: always
+    cap_add: # Required for tailscale to work
+      - net_admin
+      - sys_module
+    network_mode: host
+    privileged: true
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  nginx-proxy:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy
+    networks:
+      - humanity
+    volumes:
+      - /mnt/user/appdata/Nginx-Proxy-Manager-Official/data:/data
+      - /mnt/user/appdata/Nginx-Proxy-Manager-Official/letsencrypt:/etc/letsencrypt
+      - /tmp/Nginx-Proxy-Manager-Official/var/log:/var/log
+    ports:
+      - 7818:81
+      - 80:80
+      - 443:443
+      - 30000:3000
+    restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  pihole-proxy:
+    image: pihole/pihole:latest
+    container_name: pihole
+    networks:
+      br0:
+        ipv4_address: 192.168.1.2
+    volumes:
+      - /mnt/user/appdata/pihole/pihole/:/etc/pihole/
+      - /mnt/user/appdata/pihole/dnsmasq.d/:/etc/dnsmasq.d/
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      #      - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
+      - "80:80/tcp"
+    environment:
+      TZ: "Australia/Melbourne"
+      WEBPASSWORD: admin
+      ServerIP: 192.168.1.2
+      DNSMASQ_LISTENING: all
+      WEBUIBOXEDLAYOUT: boxed
+      INTERFACE: br0
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns:latest
+    restart: always
+    container_name: NeptuneDDNS
+    networks:
+      - humanity
+    environment:
+      - API_KEY=d68c6c74968264f7693b1eb51bce42df58555
+      - ZONE=neptune-network.com
+      - SUBDOMAIN=home
+      - PROXIED=true
+      - RRTYPE=A
+      - EMAIL=nathan@wimmerait.com.au
+    deploy:
+      resources:
+        limits:
+          memory: 100m
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: Watchtower
+    restart: unless-stopped
+    networks:
+      - humanity
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_CLEANUP: true
+      WATCHTOWER_INCLUDE_STOPPED: true
+      WATCHTOWER_INCLUDE_RESTARTING: true
+      WATCHTOWER_RUN_ONCE: false
+      WATCHTOWER_SCHEDULE: 0 0 * * *
+      TZ: Australia/Melbourne
+
+  netdata:
+    image: netdata/netdata:edge
+    container_name: netdata
+    hostname: Neptune
+    pid: host
+    network_mode: host
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - /mnt/user/appdata/netdata/config:/etc/netdata
+      - /mnt/user/appdata/netdata/liba:/var/lib/netdata
+      - /mnt/user/appdata/netdata/cache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - NETDATA_CLAIM_TOKEN=KZpO8ScPMlUvfWtQew7NtUFgdGtBLPytyzGgOV1KPhTfOAQm7lAbYM1_rsXkJKHcnSRmh9FS0JugyQqM4JZHhD4BAArqHfzcQ72wspJ0y4q0ysLvV0_1lvFbBUootwGggh-Cbxk
+      - NETDATA_CLAIM_URL=https://app.netdata.cloud
+      - NETDATA_CLAIM_ROOMS=b2fe038c-f758-4cc8-8cf0-e4fbe0ca471e
+
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: always
+    network_mode: host
+    volumes:
+      - /mnt/user/appdata/Home-Assistant-Container:/config
+
+  vaultwarden:
+    image: vaultwarden/server
+    container_name: vaultwarden
+    restart: always
+    networks:
+      - humanity
+    environment:
+      - SIGNUPS_ALLOWED=true
+      - INVITATIONS_ALLOWED=true
+      - WEBSOCKET_ENABLED=true
+      - ADMIN_TOKEN=MY7Qm5ZbiLH0nafgImOm4N63d+AvmlIDiprS0J09pfJveu9wbYKNfyPmcH+pmSnV
+    volumes:
+      - /mnt/user/appdata/vaultwarden:/data
+    ports:
+      - 4743:80/tcp
