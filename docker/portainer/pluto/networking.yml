@@ -3,6 +3,8 @@ services:
   nginx-proxy:
     image: jc21/nginx-proxy-manager:latest
     container_name: nginx-proxy
+    networks:
+      - humanity
     ports:
       - 7818:81
       - 80:80
@@ -34,6 +36,5 @@ volumes:
   nginx-letsencrypt:
 
 networks:
-  default:
+  humanity:
     external: true
-    name: humanity
