@@ -10,8 +10,12 @@ services:
       - 30000:3000
     restart: always
     volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - nginx-data:/data
+      - nginx-letsencrypt:/etc/letsencrypt
+
+volumes:
+  nginx-data:
+  nginx-letsencrypt:
 
 networks:
   default:
