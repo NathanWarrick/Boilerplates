@@ -18,8 +18,3 @@ Install Docker and Portainer Agent
 ```
 sudo bash -c "$(wget -qLO - https://raw.githubusercontent.com/NathanWarrick/Boilerplates/main/docker/docker-portainer.sh)"
 ```
-
-Test
-```
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/NathanWarrick/Proxmox/main/test.sh)"
-```
