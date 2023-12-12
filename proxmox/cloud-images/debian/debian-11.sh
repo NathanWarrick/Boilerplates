@@ -3,6 +3,7 @@ wget -c https://cloud.debian.org/images/cloud/bullseye/latest/debian-11-generic-
 qm create 9011 --memory 2048 --core 2 --name debian-11 --net0 virtio,bridge=vmbr1 --ostype l26
 qm importdisk 9011 debian-11-generic-amd64.qcow2 disks
 qm set 9011 --scsihw virtio-scsi-pci --scsi0 disks:9011/vm-9011-disk-0.raw
+sleep 10 # Give the disk time to mount
 virt-customize -a /mnt/pve/disks/images/9011/vm-9011-disk-0.raw --install qemu-guest-agent
 qm set 9011 --boot c --bootdisk scsi0 
 qm set 9011 --ide2 disks:cloudinit
