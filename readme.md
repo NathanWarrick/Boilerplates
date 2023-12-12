@@ -4,7 +4,7 @@ apt update -y
 apt install libguestfs-tools -y
 ```
 
-Update Templates
+Update Proxmox Templates
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/NathanWarrick/Boilerplates/main/proxmox/cloud-images/update-all.sh)"
 ```
