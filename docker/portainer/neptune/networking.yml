@@ -5,8 +5,7 @@ networks:
     driver: ipvlan
     external: true
   humanity:
-    driver: bridge
-    name: humanity
+    external: true
 
 services:
   tailscale:
