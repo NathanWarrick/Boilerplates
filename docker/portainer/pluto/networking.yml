@@ -33,8 +33,11 @@ services:
 
 volumes:
   nginx-data:
+    name: nginx-data
   nginx-letsencrypt:
+    name: nginx-letsencrypt
 
 networks:
   humanity:
-    external: true
+    driver: bridge
+    name: media
