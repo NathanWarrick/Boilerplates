@@ -1,0 +1,1 @@
+ip -brief address show eth0 | awk '{print $3}'
