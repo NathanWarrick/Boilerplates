@@ -13,4 +13,4 @@ qm set 9012 --sshkey ~/.ssh/id_rsa.pub
 qm set 9012 --tags debian
 qm template 9012
 
-#sudo bash -c "$(wget -qLO - https://raw.githubusercontent.com/NathanWarrick/Boilerplates/main/docker/docker-portainer.sh)"
+#bash -c "$(wget -qLO - https://raw.githubusercontent.com/NathanWarrick/Boilerplates/main/proxmox/cloud-images/debian/debian-12.sh)"
