@@ -1,4 +1,10 @@
 version: "3.8"
+
+networks:
+  humanity:
+    driver: bridge
+    name: humanity
+
 services:
   cloudflare-ddns:
     image: oznu/cloudflare-ddns:latest
