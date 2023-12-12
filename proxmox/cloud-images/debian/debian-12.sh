@@ -3,6 +3,7 @@ wget -c https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-generic-
 qm create 9012 --memory 2048 --core 2 --name debian-12 --net0 virtio,bridge=vmbr1 --ostype l26
 qm importdisk 9012 debian-12-generic-amd64.qcow2 disks
 qm set 9012 --scsihw virtio-scsi-pci --scsi0 disks:9012/vm-9012-disk-0.raw
+sleep 10 # Give the disk time to mount
 virt-customize -a /mnt/pve/disks/images/9012/vm-9012-disk-0.raw --install qemu-guest-agent
 qm set 9012 --boot c --bootdisk scsi0 
 qm set 9012 --ide2 disks:cloudinit
