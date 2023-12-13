@@ -1,12 +1,12 @@
 qm destroy 9021
 
-wget -c https://download.fedoraproject.org/pub/fedora/linux/releases/39/Server/x86_64/images/Fedora-Server-KVM-39-1.5.x86_64.qcow2
-virt-customize -a Fedora-Server-KVM-39-1.5.x86_64.qcow2 --install qemu-guest-agent,nano
+wget -c https://download.fedoraproject.org/pub/fedora/linux/releases/39/Cloud/x86_64/images/Fedora-Cloud-Base-39-1.5.x86_64.qcow2
+virt-customize -a Fedora-Cloud-Base-39-1.5.x86_64.qcow2 --install qemu-guest-agent,nano
 sleep 2
-virt-sysprep --operations machine-id -a Fedora-Server-KVM-39-1.5.x86_64.qcow2
+virt-sysprep --operations machine-id -a Fedora-Cloud-Base-39-1.5.x86_64.qcow2
 
 qm create 9021 --memory 2048 --core 2 --name openSUSE-leap-15.5-Minimal --net0 virtio,bridge=vmbr1
-qm importdisk 9021 Fedora-Server-KVM-39-1.5.x86_64.qcow2 disks
+qm importdisk 9021 Fedora-Cloud-Base-39-1.5.x86_64.qcow2 disks
 sleep 5
 qm set 9021 --scsihw virtio-scsi-pci --scsi0 disks:9021/vm-9021-disk-0.raw
 qm set 9021 --boot c --bootdisk scsi0 
@@ -19,4 +19,4 @@ qm set 9021 --sshkey ~/.ssh/id_rsa.pub
 qm set 9021 --tags fedora
 qm template 9021
 
-rm Fedora-Server-KVM-39-1.5.x86_64.qcow2
+rm Fedora-Cloud-Base-39-1.5.x86_64.qcow2
