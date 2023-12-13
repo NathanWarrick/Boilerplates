@@ -16,4 +16,4 @@ qm set 9020 --sshkey ~/.ssh/id_rsa.pub
 qm set 9020 --tags fedora
 qm template 9020
 
-rm fedora-coreos-39.20231119.3.0-live.x86_64.iso
+#rm fedora-coreos-39.20231119.3.0-live.x86_64.iso

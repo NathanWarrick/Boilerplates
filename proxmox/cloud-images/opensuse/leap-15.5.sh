@@ -16,4 +16,4 @@ qm set 9015 --sshkey ~/.ssh/id_rsa.pub
 qm set 9015 --tags openSUSE
 qm template 9015
 
-rm openSUSE-Leap-15.5-Minimal-VM.x86_64-Cloud.qcow2
+#rm openSUSE-Leap-15.5-Minimal-VM.x86_64-Cloud.qcow2

@@ -16,4 +16,4 @@ qm set 9006 --sshkey ~/.ssh/id_rsa.pub
 qm set 9006 --tags ubuntu
 qm template 9006
 
-#rm ubuntu-22.04-minimal-cloudimg-amd64.img
+rm ubuntu-22.04-minimal-cloudimg-amd64.img

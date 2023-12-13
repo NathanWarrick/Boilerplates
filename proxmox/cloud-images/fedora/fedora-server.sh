@@ -16,4 +16,4 @@ qm set 9021 --sshkey ~/.ssh/id_rsa.pub
 qm set 9021 --tags fedora
 qm template 9021
 
-rm Fedora-Server-KVM-39-1.5.x86_64.qcow2
+#rm Fedora-Server-KVM-39-1.5.x86_64.qcow2

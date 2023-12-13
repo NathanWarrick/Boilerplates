@@ -16,4 +16,4 @@ qm set 9030 --sshkey ~/.ssh/id_rsa.pub
 qm set 9030 --tags alpine
 qm template 9030
 
-rm alpine-virt-3.19.0-x86_64.iso
+#rm alpine-virt-3.19.0-x86_64.iso

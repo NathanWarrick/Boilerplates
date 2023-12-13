@@ -16,4 +16,4 @@ qm set 9010 --sshkey ~/.ssh/id_rsa.pub
 qm set 9010 --tags debian
 qm template 9010
 
-rm debian-10-generic-amd64.qcow2
+#rm debian-10-generic-amd64.qcow2

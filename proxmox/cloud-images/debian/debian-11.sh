@@ -16,4 +16,4 @@ qm set 9011 --sshkey ~/.ssh/id_rsa.pub
 qm set 9011 --tags debian
 qm template 9011
 
-rm debian-11-generic-amd64.qcow2
+#rm debian-11-generic-amd64.qcow2

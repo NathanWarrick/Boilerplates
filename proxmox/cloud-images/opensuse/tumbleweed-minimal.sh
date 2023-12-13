@@ -16,4 +16,4 @@ qm set 9016 --sshkey ~/.ssh/id_rsa.pub
 qm set 9016 --tags openSUSE
 qm template 9016
 
-rm openSUSE-Tumbleweed-Minimal-VM.x86_64-Cloud.qcow2
+#rm openSUSE-Tumbleweed-Minimal-VM.x86_64-Cloud.qcow2

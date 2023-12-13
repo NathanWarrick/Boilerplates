@@ -16,4 +16,4 @@ qm set 9012 --sshkey ~/.ssh/id_rsa.pub
 qm set 9012 --tags debian
 qm template 9012
 
-rm debian-12-generic-amd64.qcow2
+#rm debian-12-generic-amd64.qcow2

@@ -16,4 +16,4 @@ qm set 9015 --sshkey ~/.ssh/id_rsa.pub
 qm set 9015 --tags centos
 qm template 9015
 
-rm CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2
+#rm CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2
