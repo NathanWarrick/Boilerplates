@@ -13,5 +13,4 @@ qm set 9010 --ipconfig0 ip=dhcp
 qm set 9010 --sshkey ~/.ssh/id_rsa.pub
 qm set 9010 --tags debian
 qm template 9010
-
-#bash -c "$(wget -qLO - https://raw.githubusercontent.com/NathanWarrick/Boilerplates/main/proxmox/cloud-images/debian/debian-10.sh)"
+rm debian-10-generic-amd64.qcow2

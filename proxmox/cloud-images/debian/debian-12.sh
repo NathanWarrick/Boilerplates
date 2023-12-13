@@ -13,5 +13,4 @@ qm set 9012 --ipconfig0 ip=dhcp
 qm set 9012 --sshkey ~/.ssh/id_rsa.pub
 qm set 9012 --tags debian
 qm template 9012
-
-#bash -c "$(wget -qLO - https://raw.githubusercontent.com/NathanWarrick/Boilerplates/main/proxmox/cloud-images/debian/debian-12.sh)"
+rm debian-12-generic-amd64.qcow2

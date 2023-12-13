@@ -13,5 +13,4 @@ qm set 9011 --ipconfig0 ip=dhcp
 qm set 9011 --sshkey ~/.ssh/id_rsa.pub
 qm set 9011 --tags debian
 qm template 9011
-
-#bash -c "$(wget -qLO - https://raw.githubusercontent.com/NathanWarrick/Boilerplates/main/proxmox/cloud-images/debian/debian-11.sh)"
+rm debian-11-generic-amd64.qcow2

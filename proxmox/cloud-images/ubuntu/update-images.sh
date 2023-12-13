@@ -1,3 +1,4 @@
+# DO NOT USE
 wget -c https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img -O ubuntu-18.04-LTS.img -P /mnt/pve/isos/template/iso #18.04 LTS
 wget -c https://cloud-images.ubuntu.com/minimal/releases/bionic/release/ubuntu-18.04-minimal-cloudimg-amd64.img -O ubuntu-18.04-LTS-Minimal.img -P /mnt/pve/isos/template/iso #18.04 LTS Minimal
 
