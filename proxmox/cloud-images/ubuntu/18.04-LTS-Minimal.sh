@@ -2,9 +2,12 @@ qm destroy 9002
 
 wget -c https://cloud-images.ubuntu.com/minimal/releases/bionic/release/ubuntu-18.04-minimal-cloudimg-amd64.img
 virt-customize -a ubuntu-18.04-minimal-cloudimg-amd64.img --install qemu-guest-agent,nano
+sleep 2
+virt-sysprep --operations machine-id -a ubuntu-18.04-minimal-cloudimg-amd64.img
 
 qm create 9002 --memory 2048 --core 2 --name ubuntu-18.04-LTS-Minimal --net0 virtio,bridge=vmbr1
 qm importdisk 9002 ubuntu-18.04-minimal-cloudimg-amd64.img disks
+sleep 5
 qm set 9002 --scsihw virtio-scsi-pci --scsi0 disks:9002/vm-9002-disk-0.raw
 qm set 9002 --boot c --bootdisk scsi0 
 
