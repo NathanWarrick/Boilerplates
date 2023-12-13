@@ -1,7 +1,7 @@
 qm destroy 9011
 
 wget -c https://cloud.debian.org/images/cloud/bullseye/latest/debian-11-generic-amd64.qcow2
-virt-customize --install qemu-guest-agent -a debian-11-generic-amd64.qcow2,nano
+virt-customize -a debian-11-generic-amd64.qcow2 --install qemu-guest-agent,nano
 
 qm create 9011 --memory 2048 --core 2 --name debian-11 --net0 virtio,bridge=vmbr1 --ostype l26
 qm importdisk 9011 debian-11-generic-amd64.qcow2 disks

@@ -1,7 +1,7 @@
 qm destroy 9030
 
 wget -c https://dl-cdn.alpinelinux.org/alpine/v3.19/releases/x86_64/alpine-virt-3.19.0-x86_64.iso
-virt-customize -a /mnt/pve/disks/images/9020/vm-9020-disk-0.raw --install qemu-guest-agent,nano
+virt-customize -a alpine-virt-3.19.0-x86_64.iso --install qemu-guest-agent,nano
 
 qm create 9030 --memory 2048 --core 2 --name alpine --net0 virtio,bridge=vmbr1
 qm importdisk 9030 alpine-virt-3.19.0-x86_64.iso disks

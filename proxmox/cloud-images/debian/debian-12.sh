@@ -1,7 +1,7 @@
 qm destroy 9012
 
 wget -c https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-generic-amd64.qcow2
-virt-customize --install qemu-guest-agent -a debian-12-generic-amd64.qcow2,nano
+virt-customize -a debian-12-generic-amd64.qcow2 --install qemu-guest-agent,nano
 
 qm create 9012 --memory 2048 --core 2 --name debian-12 --net0 virtio,bridge=vmbr1 --ostype l26
 qm importdisk 9012 debian-12-generic-amd64.qcow2 disks
