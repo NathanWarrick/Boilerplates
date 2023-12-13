@@ -1,4 +1,15 @@
 version: "3.8"
 services:
-  hello_world:
-    image: hello-world
+  cronicle:
+    image: soulteary/cronicle:latest
+    container_name: cronicle
+    hostname: cronicle
+    ports:
+      - 3012:3012
+    restart: always
+    volumes:
+      - cronicle:/opt/cronicle
+
+volumes:
+  cronicle:
+    name: cronicle
