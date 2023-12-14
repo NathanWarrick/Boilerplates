@@ -5,7 +5,7 @@ virt-customize -a bionic-server-cloudimg-amd64.img --install qemu-guest-agent,na
 sleep 2
 virt-sysprep --operations machine-id -a bionic-server-cloudimg-amd64.img
 
-qm create 9001 --memory 2048 --core 2 --name ubuntu-18.04-LTS --net0 virtio,bridge=vmbr1
+qm create 9001 --memory 2048 --core 2 --name ubuntu-18.04-LTS_$(date +%Y-%m-%d) --net0 virtio,bridge=vmbr1
 qm importdisk 9001 bionic-server-cloudimg-amd64.img disks
 sleep 5
 qm set 9001 --scsihw virtio-scsi-pci --scsi0 disks:9001/vm-9001-disk-0.raw

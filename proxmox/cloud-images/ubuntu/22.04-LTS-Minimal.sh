@@ -5,7 +5,7 @@ virt-customize -a ubuntu-22.04-minimal-cloudimg-amd64.img --install qemu-guest-a
 sleep 2
 virt-sysprep --operations machine-id -a ubuntu-22.04-minimal-cloudimg-amd64.img
 
-qm create 9006 --memory 2048 --core 2 --name ubuntu-22.04-LTS-Minimal --net0 virtio,bridge=vmbr1
+qm create 9006 --memory 2048 --core 2 --name ubuntu-22.04-LTS-Minimal_$(date +%Y-%m-%d) --net0 virtio,bridge=vmbr1
 qm importdisk 9006 ubuntu-22.04-minimal-cloudimg-amd64.img disks
 sleep 5
 qm set 9006 --scsihw virtio-scsi-pci --scsi0 disks:9006/vm-9006-disk-0.raw

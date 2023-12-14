@@ -5,7 +5,7 @@ virt-customize -a fedora-coreos-39.20231119.3.0-live.x86_64.iso --install qemu-g
 sleep 2
 virt-sysprep --operations machine-id -a fedora-coreos-39.20231119.3.0-live.x86_64.iso
 
-qm create 9020 --memory 2048 --core 2 --name openSUSE-leap-15.5-Minimal --net0 virtio,bridge=vmbr1
+qm create 9020 --memory 2048 --core 2 --name fedora-coreos_$(date +%Y-%m-%d) --net0 virtio,bridge=vmbr1
 qm importdisk 9020 fedora-coreos-39.20231119.3.0-live.x86_64.iso disks
 sleep 5
 qm set 9020 --scsihw virtio-scsi-pci --scsi0 disks:9020/vm-9020-disk-0.raw
