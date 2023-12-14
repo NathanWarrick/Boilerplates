@@ -5,7 +5,7 @@ virt-customize -a openSUSE-Leap-15.5-Minimal-VM.x86_64-Cloud.qcow2 --install qem
 sleep 2
 virt-sysprep --operations machine-id -a openSUSE-Leap-15.5-Minimal-VM.x86_64-Cloud.qcow2
 
-qm create 9015 --memory 2048 --core 2 --name openSUSE-leap-15.5-Minimal_$(date +%Y-%m-%d) --net0 virtio,bridge=vmbr1
+qm create 9015 --memory 2048 --core 2 --name openSUSE-leap-15.5-Minimal-$(date +%Y-%m-%d) --net0 virtio,bridge=vmbr1
 qm importdisk 9015 openSUSE-Leap-15.5-Minimal-VM.x86_64-Cloud.qcow2 disks
 sleep 5
 qm set 9015 --scsihw virtio-scsi-pci --scsi0 disks:9015/vm-9015-disk-0.raw
