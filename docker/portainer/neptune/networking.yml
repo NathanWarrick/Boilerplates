@@ -68,7 +68,6 @@ services:
     #  traefik.http.routers.authelia.entryPoints: https
     networks:
       - proxy
-      - humanity
     restart: unless-stopped
     #depends_on:
     #  - redis
