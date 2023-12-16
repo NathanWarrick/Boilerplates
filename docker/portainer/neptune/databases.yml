@@ -53,7 +53,9 @@ services:
     volumes:
       - /mnt/user/databases/redis:/bitnami/
     environment:
-      REDIS_PASSWORD: "wv9925hbMBfD"
+      - REDIS_PASSWORD="wv9925hbMBfD"
+      - PUID=99
+      - PGID=100
     networks:
       - proxy
       - humanity
@@ -67,11 +69,13 @@ services:
     volumes:
       - /mnt/user/databases/mariadb:/config
     environment:
-      MYSQL_ROOT_PASSWORD: "Nii6EzApS8JL"
-      MYSQL_ROOT_USER: root
-      MYSQL_DATABASE: authelia
-      MYSQL_USER: authelia
-      MYSQL_PASSWORD: "gpY3SGEWrbST"
+      - MYSQL_ROOT_PASSWORD="Nii6EzApS8JL"
+      - MYSQL_ROOT_USER="root"
+      - MYSQL_DATABASE="authelia"
+      - MYSQL_USER="authelia"
+      - MYSQL_PASSWORD="gpY3SGEWrbST"
+      - PUID=99
+      - PGID=100
     networks:
       - proxy
       - humanity
