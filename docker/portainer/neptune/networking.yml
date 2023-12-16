@@ -53,11 +53,11 @@ services:
         limits:
           memory: 1G
 
-  auth:
+  authelia:
     container_name: authelia
     image: authelia/authelia:latest
-    expose:
-      - 9091
+    ports:
+      - 9091:9091
     volumes:
       - /mnt/user/appdata/authelia/auth:/config
     environment:
