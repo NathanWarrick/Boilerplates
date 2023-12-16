@@ -5,7 +5,7 @@ virt-customize -a debian-12-generic-amd64.qcow2 --install qemu-guest-agent,nano
 sleep 2
 virt-sysprep --operations machine-id -a debian-12-generic-amd64.qcow2
 
-qm create 9012 --memory 2048 --core 2 --name debian-12-$(date +%Y-%m-%d) --net0 virtio,bridge=vmbr1 --ostype l26
+qm create 9012 --memory 2048 --core 2 --name debian-12--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1 --ostype l26
 qm importdisk 9012 debian-12-generic-amd64.qcow2 disks
 sleep 5
 qm set 9012 --scsihw virtio-scsi-pci --scsi0 disks:9012/vm-9012-disk-0.raw

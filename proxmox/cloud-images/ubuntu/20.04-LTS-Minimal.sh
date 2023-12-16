@@ -5,7 +5,7 @@ virt-customize -a /ubuntu-20.04-minimal-cloudimg-amd64.img --install qemu-guest-
 sleep 2
 virt-sysprep --operations machine-id -a ubuntu-20.04-minimal-cloudimg-amd64.img
 
-qm create 9004 --memory 2048 --core 2 --name ubuntu-20.04-LTS-Minimal-$(date +%Y-%m-%d) --net0 virtio,bridge=vmbr1
+qm create 9004 --memory 2048 --core 2 --name ubuntu-20.04-LTS-Minimal--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1
 qm importdisk 9004 ubuntu-20.04-minimal-cloudimg-amd64.img disks
 sleep 5
 qm set 9004 --scsihw virtio-scsi-pci --scsi0 disks:9004/vm-9004-disk-0.raw

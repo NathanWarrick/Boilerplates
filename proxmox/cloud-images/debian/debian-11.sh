@@ -5,7 +5,7 @@ virt-customize -a debian-11-generic-amd64.qcow2 --install qemu-guest-agent,nano
 sleep 2
 virt-sysprep --operations machine-id -a debian-11-generic-amd64.qcow2
 
-qm create 9011 --memory 2048 --core 2 --name debian-11-$(date +%Y-%m-%d) --net0 virtio,bridge=vmbr1 --ostype l26
+qm create 9011 --memory 2048 --core 2 --name debian-11--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1 --ostype l26
 qm importdisk 9011 debian-11-generic-amd64.qcow2 disks
 sleep 5
 qm set 9011 --scsihw virtio-scsi-pci --scsi0 disks:9011/vm-9011-disk-0.raw

@@ -5,7 +5,7 @@ virt-customize -a jammy-server-cloudimg-amd64-disk-kvm.img --install qemu-guest-
 sleep 2
 virt-sysprep --operations machine-id -a jammy-server-cloudimg-amd64-disk-kvm.img
 
-qm create 9005 --memory 2048 --core 2 --name ubuntu-22.04-LTS-$(date +%Y-%m-%d) --net0 virtio,bridge=vmbr1
+qm create 9005 --memory 2048 --core 2 --name ubuntu-22.04-LTS--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1
 qm importdisk 9005 jammy-server-cloudimg-amd64-disk-kvm.img disks
 sleep 5
 qm set 9005 --scsihw virtio-scsi-pci --scsi0 disks:9005/vm-9005-disk-0.raw
