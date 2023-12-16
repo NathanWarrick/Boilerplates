@@ -37,6 +37,9 @@ services:
     networks:
       - humanity
       - proxy
+    environment:
+      - PUID=99
+      - PGID=100
     volumes:
       - /mnt/user/appdata/Nginx-Proxy-Manager-Official/data:/data
       - /mnt/user/appdata/Nginx-Proxy-Manager-Official/letsencrypt:/etc/letsencrypt
