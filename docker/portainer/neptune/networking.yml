@@ -6,6 +6,9 @@ networks:
     external: true
   humanity:
     external: true
+  proxy:
+    name: proxy
+    driver: bridge
 
 services:
   tailscale:
@@ -33,6 +36,7 @@ services:
     container_name: nginx-proxy
     networks:
       - humanity
+      - proxy
     volumes:
       - /mnt/user/appdata/Nginx-Proxy-Manager-Official/data:/data
       - /mnt/user/appdata/Nginx-Proxy-Manager-Official/letsencrypt:/etc/letsencrypt
@@ -48,6 +52,24 @@ services:
       resources:
         limits:
           memory: 1G
+
+  auth:
+    container_name: authelia
+    image: authelia/authelia:latest
+    expose:
+      - 9091
+    volumes:
+      - /mnt/user/appdata/authelia/auth:/config
+    labels:
+      traefik.enable: true
+      traefik.http.routers.authelia.entryPoints: https
+    networks:
+      - proxy
+      - humanity
+    restart: unless-stopped
+    #depends_on:
+    #  - redis
+    #  - mariadb
 
   pihole-proxy:
     image: pihole/pihole:latest

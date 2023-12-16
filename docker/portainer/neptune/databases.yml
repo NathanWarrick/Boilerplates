@@ -3,11 +3,15 @@ version: "3.8"
 networks:
   humanity:
     external: true
+  proxy:
+    external: true
 
 services:
   mysql:
     image: mysql
     container_name: mysql
+    networks:
+      - humanity
     # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
     # (this is just an example, not intended to be a production configuration)
     command: --default-authentication-plugin=mysql_native_password
@@ -24,6 +28,8 @@ services:
   sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sql
+    networks:
+      - humanity
     restart: unless-stopped
     ports:
       - 1433:1433
@@ -38,6 +44,38 @@ services:
     environment:
       POSTGRES_USER: NathanWarrick
       POSTGRES_PASSWORD: B@yed133
+
+  redis:
+    container_name: redis
+    image: bitnami/redis:latest
+    expose:
+      - 6379
+    volumes:
+      - /mnt/user/databases/redis:/bitnami/
+    environment:
+      REDIS_PASSWORD: "wv9925hbMBfD"
+    networks:
+      - proxy
+      - humanity
+    restart: unless-stopped
+
+  mariadb:
+    container_name: mariadb
+    image: linuxserver/mariadb:latest
+    expose:
+      - 3306
+    volumes:
+      - /mnt/user/databases/mariadb:/config
+    environment:
+      MYSQL_ROOT_PASSWORD: "Nii6EzApS8JL"
+      MYSQL_ROOT_USER: root
+      MYSQL_DATABASE: authelia
+      MYSQL_USER: authelia
+      MYSQL_PASSWORD: "gpY3SGEWrbST"
+    networks:
+      - proxy
+      - humanity
+    restart: unless-stopped
 
   adminer:
     image: adminer
