@@ -3,7 +3,7 @@ qm destroy 9006
 wget -c https://cloud-images.ubuntu.com/minimal/releases/jammy/release/ubuntu-22.04-minimal-cloudimg-amd64.img
 virt-customize -a ubuntu-22.04-minimal-cloudimg-amd64.img --install qemu-guest-agent,nano
 sleep 2
-virt-sysprep --operations machine-id -a ubuntu-22.04-minimal-cloudimg-amd64.img
+virt-sysprep --operations machine-id,net-hostname -a ubuntu-22.04-minimal-cloudimg-amd64.img
 
 qm create 9006 --memory 2048 --core 2 --name ubuntu-22.04-LTS-Minimal--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1
 qm importdisk 9006 ubuntu-22.04-minimal-cloudimg-amd64.img disks
