@@ -49,23 +49,6 @@ services:
         limits:
           memory: 1G
 
-  authelia:
-    container_name: authelia
-    image: authelia/authelia
-    restart: unless-stopped
-    ports:
-      - 9091:9091
-    volumes:
-      - /mnt/user/appdata/authelia/config:/config
-    environment:
-      - TZ=Australia/Melbourne
-      - PUID=99
-      - PGID=100
-    deploy:
-      resources:
-        limits:
-          memory: 1G
-
   pihole-proxy:
     image: pihole/pihole:latest
     container_name: pihole

@@ -1,0 +1,53 @@
+version: "3.8"
+services:
+  auth:
+    container_name: authelia
+    image: authelia/authelia:latest
+    expose:
+      - 9091
+    volumes:
+      - /mnt/user/appdata/authelia/auth:/config
+    labels:
+      traefik.enable: true
+      traefik.http.routers.authelia.entryPoints: https
+    networks:
+      - proxy
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - mariadb
+
+  redis:
+    container_name: redis-authelia
+    image: bitnami/redis:latest
+    expose:
+      - 6379
+    volumes:
+      - /mnt/user/appdata/authelia/redis:/bitnami/
+    environment:
+      REDIS_PASSWORD: "wv9925hbMBfD"
+    networks:
+      - proxy
+    restart: unless-stopped
+
+  mariadb:
+    container_name: mariadb-authelia
+    image: linuxserver/mariadb:latest
+    expose:
+      - 3306
+    volumes:
+      - /mnt/user/appdata/authelia/mariadb:/config
+    environment:
+      MYSQL_ROOT_PASSWORD: "Nii6EzApS8JL"
+      MYSQL_ROOT_USER: root
+      MYSQL_DATABASE: authelia
+      MYSQL_USER: authelia
+      MYSQL_PASSWORD: "gpY3SGEWrbST"
+    networks:
+      - proxy
+    restart: unless-stopped
+
+networks:
+  proxy:
+    driver: bridge
+    external: true
