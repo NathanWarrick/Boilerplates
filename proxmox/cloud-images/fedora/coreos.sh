@@ -9,6 +9,7 @@ qm create 9020 --memory 2048 --core 2 --name fedora-coreos--$(date +%d-%m-%Y) --
 qm importdisk 9020 fedora-coreos-39.20231119.3.0-live.x86_64.iso disks
 sleep 5
 qm set 9020 --scsihw virtio-scsi-pci --scsi0 disks:9020/vm-9020-disk-0.raw
+qm disk move 9020 scsi0 disks --format qcow2 --delete
 qm set 9020 --boot c --bootdisk scsi0 
 
 qm set 9020 --ide2 disks:cloudinit

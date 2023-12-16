@@ -9,6 +9,7 @@ qm create 9001 --memory 2048 --core 2 --name ubuntu-18.04-LTS--$(date +%d-%m-%Y)
 qm importdisk 9001 bionic-server-cloudimg-amd64.img disks
 sleep 5
 qm set 9001 --scsihw virtio-scsi-pci --scsi0 disks:9001/vm-9001-disk-0.raw
+qm disk move 9001 scsi0 disks --format qcow2 --delete
 qm set 9001 --boot c --bootdisk scsi0 
 
 qm set 9001 --ide2 disks:cloudinit

@@ -9,6 +9,7 @@ qm create 9030 --memory 2048 --core 2 --name alpine--$(date +%d-%m-%Y) --net0 vi
 qm importdisk 9030 alpine-virt-3.19.0-x86_64.iso disks
 sleep 5
 qm set 9030 --scsihw virtio-scsi-pci --scsi0 disks:9030/vm-9030-disk-0.raw
+qm disk move 9030 scsi0 disks --format qcow2 --delete
 qm set 9030 --boot c --bootdisk scsi0 
 
 qm set 9030 --ide2 disks:cloudinit

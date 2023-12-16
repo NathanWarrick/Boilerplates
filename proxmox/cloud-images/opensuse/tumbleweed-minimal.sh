@@ -9,6 +9,7 @@ qm create 9016 --memory 2048 --core 2 --name openSUSE-tumbleweed-minimal--$(date
 qm importdisk 9016 openSUSE-Tumbleweed-Minimal-VM.x86_64-Cloud.qcow2 disks
 sleep 5
 qm set 9016 --scsihw virtio-scsi-pci --scsi0 disks:9016/vm-9016-disk-0.raw
+qm disk move 9016 scsi0 disks --format qcow2 --delete
 qm set 9016 --boot c --bootdisk scsi0 
 
 qm set 9016 --ide2 disks:cloudinit

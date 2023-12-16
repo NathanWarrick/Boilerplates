@@ -9,6 +9,7 @@ qm create 9010 --memory 2048 --core 2 --name debian-10--$(date +%d-%m-%Y) --net0
 qm importdisk 9010 debian-10-generic-amd64.qcow2 disks
 sleep 5
 qm set 9010 --scsihw virtio-scsi-pci --scsi0 disks:9010/vm-9010-disk-0.raw
+qm disk move 9010 scsi0 disks --format qcow2 --delete
 qm set 9010 --boot c --bootdisk scsi0 
 
 qm set 9010 --ide2 disks:cloudinit

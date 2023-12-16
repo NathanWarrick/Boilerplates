@@ -9,8 +9,9 @@ qm create 9015 --memory 2048 --core 2 --name centos-stream-9--$(date +%d-%m-%Y) 
 qm importdisk 9015 CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2 disks
 sleep 5
 qm set 9015 --scsihw virtio-scsi-pci --scsi0 disks:9015/vm-9015-disk-0.raw
-
+qm disk move 9015 scsi0 disks --format qcow2 --delete
 qm set 9015 --boot c --bootdisk scsi0 
+
 qm set 9015 --ide2 disks:cloudinit
 qm set 9015 --serial0 socket --vga serial0
 qm set 9015 --agent enabled=1

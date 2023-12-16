@@ -9,6 +9,7 @@ qm create 9015 --memory 2048 --core 2 --name openSUSE-leap-15.5-Minimal--$(date 
 qm importdisk 9015 openSUSE-Leap-15.5-Minimal-VM.x86_64-Cloud.qcow2 disks
 sleep 5
 qm set 9015 --scsihw virtio-scsi-pci --scsi0 disks:9015/vm-9015-disk-0.raw
+qm disk move 9015 scsi0 disks --format qcow2 --delete
 qm set 9015 --boot c --bootdisk scsi0 
 
 qm set 9015 --ide2 disks:cloudinit

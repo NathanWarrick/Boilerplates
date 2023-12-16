@@ -9,6 +9,7 @@ qm create 9006 --memory 2048 --core 2 --name ubuntu-22.04-LTS-Minimal--$(date +%
 qm importdisk 9006 ubuntu-22.04-minimal-cloudimg-amd64.img disks
 sleep 5
 qm set 9006 --scsihw virtio-scsi-pci --scsi0 disks:9006/vm-9006-disk-0.raw
+qm disk move 9006 scsi0 disks --format qcow2 --delete
 qm set 9006 --boot c --bootdisk scsi0 
 
 qm set 9006 --ide2 disks:cloudinit

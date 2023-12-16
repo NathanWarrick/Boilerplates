@@ -9,6 +9,7 @@ qm create 9007 --memory 2048 --core 2 --name ubuntu-24.04-LTS--$(date +%d-%m-%Y)
 qm importdisk 9007 noble-server-cloudimg-amd64.img disks
 sleep 5
 qm set 9007 --scsihw virtio-scsi-pci --scsi0 disks:9007/vm-9007-disk-0.raw
+qm disk move 9007 scsi0 disks --format qcow2 --delete
 qm set 9007 --boot c --bootdisk scsi0 
 
 qm set 9007 --ide2 disks:cloudinit

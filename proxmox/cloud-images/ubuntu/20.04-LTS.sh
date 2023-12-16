@@ -9,6 +9,7 @@ qm create 9003 --memory 2048 --core 2 --name ubuntu-20.04-LTS--$(date +%d-%m-%Y)
 qm importdisk 9003 focal-server-cloudimg-amd64-disk-kvm.img disks
 sleep 5
 qm set 9003 --scsihw virtio-scsi-pci --scsi0 disks:9003/vm-9003-disk-0.raw
+qm disk move 9003 scsi0 disks --format qcow2 --delete
 qm set 9003 --boot c --bootdisk scsi0 
 
 qm set 9003 --ide2 disks:cloudinit

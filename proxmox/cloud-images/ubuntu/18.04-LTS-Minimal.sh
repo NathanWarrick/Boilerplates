@@ -9,6 +9,7 @@ qm create 9002 --memory 2048 --core 2 --name ubuntu-18.04-LTS-Minimal--$(date +%
 qm importdisk 9002 ubuntu-18.04-minimal-cloudimg-amd64.img disks
 sleep 5
 qm set 9002 --scsihw virtio-scsi-pci --scsi0 disks:9002/vm-9002-disk-0.raw
+qm disk move 9002 scsi0 disks --format qcow2 --delete
 qm set 9002 --boot c --bootdisk scsi0 
 
 qm set 9002 --ide2 disks:cloudinit

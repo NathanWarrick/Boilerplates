@@ -9,6 +9,7 @@ qm create 9011 --memory 2048 --core 2 --name debian-11--$(date +%d-%m-%Y) --net0
 qm importdisk 9011 debian-11-generic-amd64.qcow2 disks
 sleep 5
 qm set 9011 --scsihw virtio-scsi-pci --scsi0 disks:9011/vm-9011-disk-0.raw
+qm disk move 9011 scsi0 disks --format qcow2 --delete
 qm set 9011 --boot c --bootdisk scsi0 
 
 qm set 9011 --ide2 disks:cloudinit
