@@ -53,12 +53,14 @@ services:
     container_name: authelia
     image: authelia/authelia
     restart: unless-stopped
-    expose:
-      - 9091
+    ports:
+      - 9091:9091
     volumes:
       - /mnt/user/appdata/authelia/config:/config
     environment:
-      TZ: "Australia/Melbourne"
+      - TZ=Australia/Melbourne
+      - PUID=99
+      - PGID=100
     deploy:
       resources:
         limits:
