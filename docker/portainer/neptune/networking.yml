@@ -60,9 +60,12 @@ services:
       - 9091
     volumes:
       - /mnt/user/appdata/authelia/auth:/config
-    labels:
-      traefik.enable: true
-      traefik.http.routers.authelia.entryPoints: https
+    environment:
+      - PUID=99
+      - PGID=100
+    #labels:
+    #  traefik.enable: true
+    #  traefik.http.routers.authelia.entryPoints: https
     networks:
       - proxy
       - humanity
