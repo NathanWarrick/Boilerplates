@@ -49,7 +49,7 @@ services:
         limits:
           memory: 1G
 
-    authelia:
+  authelia:
     container_name: authelia
     image: authelia/authelia
     restart: unless-stopped
@@ -61,7 +61,7 @@ services:
     volumes:
       - /mnt/user/appdata/authelia/config:/config
     environment:
-      TZ: 'Australia/Melbourne'
+      TZ: "Australia/Melbourne"
     deploy:
       resources:
         limits:
