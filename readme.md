@@ -13,5 +13,3 @@ Install Docker and Portainer Agent on host (Ubuntu)
 ```
 sudo bash -c "$(wget -qLO - https://raw.githubusercontent.com/NathanWarrick/Boilerplates/main/docker/docker-portainer.sh)"
 ```
-
-test
