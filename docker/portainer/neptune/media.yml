@@ -180,8 +180,8 @@ services:
       gluetun:
         condition: service_healthy
     environment:
-      - PUID=99
-      - PGID=100
+      #      - PUID=99
+      #      - PGID=100
       - TZ=Australia/Melbourne
       - WEBUI_PORT=8080
     volumes:
