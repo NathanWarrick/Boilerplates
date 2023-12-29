@@ -72,7 +72,7 @@ services:
     networks:
       - proxy
       - humanity
-    restart: unless-stopped
+    restart: always
     #depends_on:
     #  - redis
     #  - mariadb
@@ -188,3 +188,12 @@ services:
       - /mnt/user/appdata/vaultwarden:/data
     ports:
       - 4743:80/tcp
+
+gotify:
+  image: gotify/server
+  ports:
+    - 8090:80
+  environment:
+    - GOTIFY_DEFAULTUSER_PASS=gotify
+  volumes:
+    - /mnt/user/appdata/gotify:/app/data"
