@@ -189,11 +189,11 @@ services:
     ports:
       - 4743:80/tcp
 
-gotify:
-  image: gotify/server
-  ports:
-    - 8090:80
-  environment:
-    - GOTIFY_DEFAULTUSER_PASS="gotify"
-  volumes:
-    - /mnt/user/appdata/gotify:/app/data"
+  gotify:
+    image: gotify/server
+    ports:
+      - 8090:80
+    environment:
+      - GOTIFY_DEFAULTUSER_PASS="gotify"
+    volumes:
+      - /mnt/user/appdata/gotify:/app/data"
