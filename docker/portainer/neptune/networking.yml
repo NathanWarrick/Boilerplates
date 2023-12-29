@@ -194,6 +194,6 @@ gotify:
   ports:
     - 8090:80
   environment:
-    - GOTIFY_DEFAULTUSER_PASS=gotify
+    - GOTIFY_DEFAULTUSER_PASS="gotify"
   volumes:
     - /mnt/user/appdata/gotify:/app/data"
