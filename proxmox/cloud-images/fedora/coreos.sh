@@ -1,6 +1,8 @@
 qm destroy 9020
 
-wget -c https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/39.20231119.3.0/x86_64/fedora-coreos-39.20231119.3.0-live.x86_64.iso
+#wget -c https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/39.20231119.3.0/x86_64/fedora-coreos-39.20231119.3.0-live.x86_64.iso
+wget -c https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/39.20231119.3.0/x86_64/fedora-coreos-39.20231119.3.0-qemu.x86_64.qcow2.xz
+
 virt-customize -a fedora-coreos-39.20231119.3.0-live.x86_64.iso --install qemu-guest-agent,nano
 sleep 2
 virt-sysprep --operations machine-id -a fedora-coreos-39.20231119.3.0-live.x86_64.iso
