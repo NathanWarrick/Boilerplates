@@ -5,7 +5,7 @@ virt-customize -a ubuntu-18.04-minimal-cloudimg-amd64.img --install qemu-guest-a
 sleep 2
 virt-sysprep --operations machine-id -a ubuntu-18.04-minimal-cloudimg-amd64.img
 
-qm create 9002 --memory 2048 --core 2 --name ubuntu-18.04-LTS-Minimal--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1
+qm create 9002 --memory 2048 --core 2 --name ubuntu-18.04-LTS-Minimal--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1  --pool Templates
 qm importdisk 9002 ubuntu-18.04-minimal-cloudimg-amd64.img disks
 sleep 5
 qm set 9002 --scsihw virtio-scsi-pci --scsi0 disks:9002/vm-9002-disk-0.raw

@@ -5,7 +5,7 @@ virt-customize -a alpine-virt-3.19.0-x86_64.iso --install qemu-guest-agent,nano 
 sleep 2
 virt-sysprep --operations machine-id -a alpine-virt-3.19.0-x86_64.iso
 
-qm create 9030 --memory 2048 --core 2 --name alpine--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1
+qm create 9030 --memory 2048 --core 2 --name alpine--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1  --pool Templates
 qm importdisk 9030 alpine-virt-3.19.0-x86_64.iso disks
 sleep 5
 qm set 9030 --scsihw virtio-scsi-pci --scsi0 disks:9030/vm-9030-disk-0.raw
