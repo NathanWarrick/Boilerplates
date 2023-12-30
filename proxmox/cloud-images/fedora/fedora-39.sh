@@ -8,7 +8,7 @@ virt-sysprep --operations machine-id -a Fedora-Cloud-Base-39-1.5.x86_64.qcow2
 qm create 9021 --memory 2048 --core 2 --name fedora-39--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1
 qm importdisk 9021 Fedora-Cloud-Base-39-1.5.x86_64.qcow2 disks
 sleep 5
-qm set 9021 --scsihw virtio-scsi-pci --scsi0 disks:9021/vm-9021-disk-0.raw
+qm set 9021 --scsihw virtio-scsi-pci --scsi0 disks:9021/vm-9021-disk-1.raw
 qm disk move 9021 scsi0 disks --format qcow2 --delete
 qm set 9021 --boot c --bootdisk scsi0 
 
