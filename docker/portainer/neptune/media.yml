@@ -367,6 +367,28 @@ services:
         limits:
           memory: 5G
 
+  qbitrr:
+    image: feramance/qbitrr:latest
+    tty: true # Ensure the output of docker-compose logs qBitrr are properly colored.
+    restart: unless-stopped
+    # networks: This container MUST share a network with your Sonarr/Radarr instances
+    environment:
+      - TZ=Australia/Melbourne
+      - PUID=99
+      - PGID=100
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /mnt/user/appdata/qbitrr:/config # Config folder for qBitrr
+      - /mnt/user/Downloads/torrent:/completed_downloads:rw # The script will ALWAYS require write permission in this folder if mounted, this folder is used to monitor completed downloads and if not present will cause the script to ignore downloaded file monitoring.
+      # Now just to make sure it is clean, when using this script in a docker you will need to ensure you config.toml values reflect the mounted folders.
+      # The same would apply to Settings.CompletedDownloadFolder
+      # e.g CompletedDownloadFolder = /completed_downloads/folder/in/container
+
+    depends_on: # Not needed but this ensures qBitrr only starts if the dependencies are up and running
+      - qbittorrent
+      - radarr
+      - sonarr
+
 networks:
   media:
     driver: bridge
