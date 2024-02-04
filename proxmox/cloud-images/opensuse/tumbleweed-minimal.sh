@@ -5,7 +5,7 @@ virt-customize -a openSUSE-Tumbleweed-Minimal-VM.x86_64-Cloud.qcow2 --install qe
 sleep 2
 virt-sysprep --operations machine-id -a openSUSE-Tumbleweed-Minimal-VM.x86_64-Cloud.qcow2
 
-qm create 9016 --memory 2048 --core 2 --name openSUSE-tumbleweed-minimal--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1
+qm create 9016 --memory 2048 --core 2 --name openSUSE-tumbleweed-minimal--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1  --pool Templates
 qm importdisk 9016 openSUSE-Tumbleweed-Minimal-VM.x86_64-Cloud.qcow2 disks
 sleep 5
 qm set 9016 --scsihw virtio-scsi-pci --scsi0 disks:9016/vm-9016-disk-0.raw

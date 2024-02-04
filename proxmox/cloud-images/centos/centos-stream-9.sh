@@ -5,7 +5,7 @@ virt-customize -a CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2 --install qem
 sleep 2
 virt-sysprep --operations machine-id -a CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2
 
-qm create 9015 --memory 2048 --core 2 --name centos-stream-9--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1 --ostype l26
+qm create 9015 --memory 2048 --core 2 --name centos-stream-9--$(date +%d-%m-%Y) --net0 virtio,bridge=vmbr1  --pool Templates --ostype l26
 qm importdisk 9015 CentOS-Stream-GenericCloud-9-latest.x86_64.qcow2 disks
 sleep 5
 qm set 9015 --scsihw virtio-scsi-pci --scsi0 disks:9015/vm-9015-disk-0.raw
