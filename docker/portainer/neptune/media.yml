@@ -369,6 +369,7 @@ services:
 
   qbitrr:
     image: feramance/qbitrr:latest
+    container_name: qbitrr
     tty: true # Ensure the output of docker-compose logs qBitrr are properly colored.
     restart: unless-stopped
     # networks: This container MUST share a network with your Sonarr/Radarr instances
