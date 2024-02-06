@@ -36,8 +36,6 @@ services:
     image: zoeyvid/npmplus
     restart: always
     network_mode: host
-    networks:
-      - humanity
     volumes:
       - npmplus-data:/data
     #      - "/var/www:/var/www" # optional, if you want to use it as webserver for html/php
