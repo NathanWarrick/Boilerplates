@@ -39,7 +39,7 @@ services:
     networks:
       - humanity
     ports:
-      - 81:81
+      - 7818:81
     volumes:
       - "npmplus-data:/data"
     #      - "/var/www:/var/www" # optional, if you want to use it as webserver for html/php
