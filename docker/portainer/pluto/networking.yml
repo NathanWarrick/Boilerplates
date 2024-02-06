@@ -35,17 +35,13 @@ services:
     container_name: npmplus
     image: zoeyvid/npmplus
     restart: always
-    #   network_mode: host
-    networks:
-      - humanity
-    ports:
-      - 7818:81
+    network_mode: host
     volumes:
-      - "npmplus-data:/data"
+      - npmplus-data:/data
     #      - "/var/www:/var/www" # optional, if you want to use it as webserver for html/php
     #      - "/opt/npm-letsencrypt:/etc/letsencrypt" # Only needed for first time migration from original nginx-proxy-manager to this fork
     environment:
-      - "TZ=Australia/Melbourne" # set timezone, required
+      - "TZ=Europe/Berlin" # set timezone, required
 #      - "PUID=1000" # set group id, default 0 (root)
 #      - "PGID=1000" # set user id, default 0 (root)
 #      - "NIBEP=48694" # internal port of the NOMplus API, always bound to 127.0.0.1, default 48693, you need to change it, if you want to run multiple npm instances in network mode host
@@ -79,19 +75,6 @@ services:
 #      - "PHP83=true" # Activate PHP83, default false
 #      - "PHP83_APKS=php83-curl php83-openssl" # Add php extensions, see available packages here: https://pkgs.alpinelinux.org/packages?branch=v3.19&repo=community&arch=x86_64&name=php83-*, default none
 #      - "PHP_APKS=php-pecl-apcu php-pecl-redis" # Add php extensions, see available packages here: https://pkgs.alpinelinux.org/packages?branch=v3.19&repo=community&arch=x86_64&name=php-*, default none
-
-# crowdsec:
-#   container_name: crowdsec
-#   image: crowdsecurity/crowdsec
-#   restart: always
-#   network_mode: bridge
-#   ports:
-#     - "127.0.0.1:8080:8080"
-#   environment:
-#     - "TZ=Europe/Berlin"
-#   volumes:
-#     - "/opt/crowdsec/conf:/etc/crowdsec"
-#     - "/opt/crowdsec/data:/var/lib/crowdsec/data"
 
 volumes:
   # nginx-data:
