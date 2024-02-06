@@ -41,11 +41,11 @@ services:
     ports:
       - 81:81
     volumes:
-      - npmplus-data:/data
+      - "npmplus-data:/data"
     #      - "/var/www:/var/www" # optional, if you want to use it as webserver for html/php
     #      - "/opt/npm-letsencrypt:/etc/letsencrypt" # Only needed for first time migration from original nginx-proxy-manager to this fork
     environment:
-      - TZ=Australia/Melbourne # set timezone, required
+      - "TZ=Australia/Melbourne" # set timezone, required
 #      - "PUID=1000" # set group id, default 0 (root)
 #      - "PGID=1000" # set user id, default 0 (root)
 #      - "NIBEP=48694" # internal port of the NOMplus API, always bound to 127.0.0.1, default 48693, you need to change it, if you want to run multiple npm instances in network mode host
