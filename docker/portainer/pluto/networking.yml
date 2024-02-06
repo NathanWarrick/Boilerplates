@@ -35,7 +35,11 @@ services:
     container_name: npmplus
     image: zoeyvid/npmplus
     restart: always
-    network_mode: host
+    #    network_mode: host
+    networks:
+      - humanity
+    ports:
+      - 7818:81
     volumes:
       - npmplus-data:/data
     #      - "/var/www:/var/www" # optional, if you want to use it as webserver for html/php
@@ -75,6 +79,19 @@ services:
 #      - "PHP83=true" # Activate PHP83, default false
 #      - "PHP83_APKS=php83-curl php83-openssl" # Add php extensions, see available packages here: https://pkgs.alpinelinux.org/packages?branch=v3.19&repo=community&arch=x86_64&name=php83-*, default none
 #      - "PHP_APKS=php-pecl-apcu php-pecl-redis" # Add php extensions, see available packages here: https://pkgs.alpinelinux.org/packages?branch=v3.19&repo=community&arch=x86_64&name=php-*, default none
+
+# crowdsec:
+#   container_name: crowdsec
+#   image: crowdsecurity/crowdsec
+#   restart: always
+#   network_mode: bridge
+#   ports:
+#     - "127.0.0.1:8080:8080"
+#   environment:
+#     - "TZ=Europe/Berlin"
+#   volumes:
+#     - "/opt/crowdsec/conf:/etc/crowdsec"
+#     - "/opt/crowdsec/data:/var/lib/crowdsec/data"
 
 volumes:
   # nginx-data:
