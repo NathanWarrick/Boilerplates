@@ -35,11 +35,7 @@ services:
     container_name: npmplus
     image: zoeyvid/npmplus
     restart: always
-    #    network_mode: host
-    networks:
-      - humanity
-    ports:
-      - 7818:81
+    network_mode: host
     volumes:
       - npmplus-data:/data
     #      - "/var/www:/var/www" # optional, if you want to use it as webserver for html/php
