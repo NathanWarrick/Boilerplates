@@ -30,33 +30,6 @@ services:
               count: 1
               capabilities: [gpu]
 
-  plex-private:
-    image: lscr.io/linuxserver/plex:latest
-    container_name: Plex-Private
-    networks:
-      br0:
-        ipv4_address: 192.168.1.251
-    environment:
-      - PUID=99
-      - PGID=100
-      - TZ=Etc/UTC
-      - VERSION=docker
-      - PLEX_CLAIM=claim-VK3s_XyeGxSFgbhP-PoH
-    volumes:
-      - /mnt/user/transcode/plex-priv:/transcode
-      - /mnt/user/XXX/:/data
-      - /mnt/user/appdata/Plex-Private:/config
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 5g
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-
 networks:
   br0:
     driver: ipvlan
