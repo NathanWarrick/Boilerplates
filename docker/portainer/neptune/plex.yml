@@ -29,8 +29,3 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-
-networks:
-  br0:
-    driver: ipvlan
-    external: true
