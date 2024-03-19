@@ -69,29 +69,6 @@ services:
         limits:
           memory: 1G
 
-  whisparr:
-    container_name: whisparr
-    image: ghcr.io/hotio/whisparr:latest
-    networks:
-      - media
-    ports:
-      - "6969:6969"
-    environment:
-      - PUID=99
-      - PGID=100
-      - UMASK=002
-      - TZ=Australia/Melbourne
-    volumes:
-      - /mnt/user/appdata/whisparr:/config
-      - /mnt/user/Downloads/torrent/:/torrent
-      - /mnt/user/XXX:/XXX
-      - /mnt/user/Downloads/scripts/:/scripts
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 1G
-
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -178,7 +155,7 @@ services:
     network_mode: "service:gluetun"
     depends_on:
       gluetun:
-        condition: service_started
+        condition: service_healthy
     environment:
       - PUID=99
       - PGID=100
@@ -255,45 +232,6 @@ services:
       - /mnt/user/appdata/tdarr/logs:/app/logs
       - /mnt/user/Media:/Media
       - /mnt/user/transcode/tdarr:/temp
-    deploy:
-      resources:
-        limits:
-          memory: 5g
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-
-  tdarr_private:
-    container_name: tdarr_private
-    image: ghcr.io/haveagitgat/tdarr:2.00.24
-    restart: unless-stopped
-    labels:
-      - "com.centurylinklabs.watchtower.enable=false"
-    networks:
-      br0:
-        ipv4_address: 192.168.1.230
-    ports:
-      - 8265:8265 # webUI port
-      - 8266:8266 # server port
-      - 8264:8264 # node port
-    environment:
-      - TZ=Australia/Melbourne
-      - serverIP=192.168.1.230
-      - serverPort=8266
-      - webUIPort=8265
-      - internalNode=true
-      - inContainer=true
-      - nodeName=Neptune
-      - PUID=99
-      - PGID=100
-    volumes:
-      - /mnt/user/appdata/tdarr-priv/server:/app/server
-      - /mnt/user/appdata/tdarr-priv/configs:/app/configs
-      - /mnt/user/appdata/tdarr-priv/logs:/app/logs
-      - /mnt/user/XXX/:/mnt/media
-      - /mnt/user/transcode/tdarr-priv:/temp
     deploy:
       resources:
         limits:
