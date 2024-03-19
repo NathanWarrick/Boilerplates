@@ -178,6 +178,7 @@ services:
     network_mode: "service:gluetun"
     depends_on:
       gluetun:
+        condition: service_started
     environment:
       - PUID=99
       - PGID=100
