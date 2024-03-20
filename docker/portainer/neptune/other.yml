@@ -14,6 +14,21 @@ services:
     ports:
       - 1242:1242/tcp
 
+  grocy:
+    image: lscr.io/linuxserver/grocy:latest
+    container_name: grocy
+    networks:
+      - humanity
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Melbourne
+    volumes:
+      - /mnt/user/appdata/grocy/config:/config
+    ports:
+      - 9283:80
+    restart: unless-stopped
+
 networks:
   humanity:
     external: true
