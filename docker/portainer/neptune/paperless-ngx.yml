@@ -85,7 +85,7 @@ services:
       # documents are written in.
       PAPERLESS_OCR_LANGUAGE: eng
       PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
-      PAPERLESS_URL: https://archive.neptune-network.com/
+      PAPERLESS_URL: https://archive.neptune-network.com
 
 volumes:
   pgdata:
